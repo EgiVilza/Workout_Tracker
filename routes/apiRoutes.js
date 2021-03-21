@@ -7,9 +7,15 @@ module.exports = function(app) {
         })
     })
 
-    //Still needs to be worked on
-    app.put("/api/images/:id", function(req, res) {
-        db.Workout.updateOne({_id: req.params.id}, {}).then(function(dbWorkouts) {
+    //Completes exercise
+    app.put("/api/workouts/:id", function(req, res) {
+        db.Workout.updateOne({_id: req.params.id}, {exercises: req.body}).then(function(dbWorkouts) {
+            res.json(dbWorkouts)
+        })
+    })
+
+    app.post("/api/workouts", function(req, res) {
+        db.Workout.updateOne({exercises: req.body}).then(function(dbWorkouts) {
             res.json(dbWorkouts)
         })
     })
