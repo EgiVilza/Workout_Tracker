@@ -3,19 +3,33 @@ const db = require("../models")
 module.exports = function(app) {
     app.get("/api/workouts", function(req, res) {
         db.Workout.find({}).then(function(dbWorkouts) {
+
+            // dbWorkouts.forEach(workout => {
+            //     let totalDuration = 0
+            //     totalDuration += workout.duration
+
+            // });
+
             res.json(dbWorkouts)
         })
     })
 
-    //Completes exercise
+    //Put route for the current workout
     app.put("/api/workouts/:id", function(req, res) {
-        db.Workout.updateOne({_id: req.params.id}, {exercises: req.body}).then(function(dbWorkouts) {
+        db.Workout.updateOne(
+            {_id: req.params.id}, 
+            {
+                $inc: { totalDuration: req.body.duration },
+                $push: { exercises: req.body }
+            })
+            .then(function(dbWorkouts) {
             res.json(dbWorkouts)
         })
     })
 
+    //To create a workout and add it to the api
     app.post("/api/workouts", function(req, res) {
-        db.Workout.updateOne({exercises: req.body}).then(function(dbWorkouts) {
+        db.Workout.create(req.body).then(function(dbWorkouts) {
             res.json(dbWorkouts)
         })
     })
@@ -25,4 +39,5 @@ module.exports = function(app) {
             res.json(dbWorkouts)
         })
     })
+
 }
