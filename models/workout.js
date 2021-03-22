@@ -7,10 +7,6 @@ var workoutSchema = new Schema({
         type: Number,
         default: 0,
     },
-    totalDistanceCovered: {
-        type: Number,
-        default: 0,
-    },
     exercises: [{
         type: { type: String, required: true },
         name: { type: String, required: true },

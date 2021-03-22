@@ -4,11 +4,14 @@ module.exports = function(app) {
     app.get("/api/workouts", function(req, res) {
         db.Workout.find({}).then(function(dbWorkouts) {
 
-            // dbWorkouts.forEach(workout => {
-            //     let totalDuration = 0
-            //     totalDuration += workout.duration
-
-            // });
+            //Add Total Duration
+            dbWorkouts.forEach(workout => {
+                let durationTotal = 0
+                workout.exercises.forEach(exercise => {
+                    durationTotal += exercise.duration
+                })
+                workout.totalDuration = durationTotal
+            });
 
             res.json(dbWorkouts)
         })
