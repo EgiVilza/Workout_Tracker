@@ -1,6 +1,7 @@
 const db = require("../models")
 
 module.exports = function(app) {
+    //Get route for all workouts
     app.get("/api/workouts", function(req, res) {
         db.Workout.find({}).then(function(dbWorkouts) {
 
@@ -17,7 +18,7 @@ module.exports = function(app) {
         })
     })
 
-    //Put route for the current workout
+    //Put route to add exercise to the current workout
     app.put("/api/workouts/:id", function(req, res) {
         db.Workout.updateOne(
             {_id: req.params.id}, 
@@ -37,6 +38,7 @@ module.exports = function(app) {
         })
     })
 
+    //Get route to get the combine range for the stats page
     app.get("/api/workouts/range", function(req, res) {
         db.Workout.find({}).then(function(dbWorkouts) {
             res.json(dbWorkouts)
